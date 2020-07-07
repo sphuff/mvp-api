@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "username",
+    "password": "password",
+    "database": "favorites_api",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "username",
+    "password": "password",
+    "database": "favorites_api",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "username",
+    "password": "password",
+    "database": "favorites_api",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}

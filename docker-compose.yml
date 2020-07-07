@@ -1,0 +1,14 @@
+version: '3.1'
+
+services:
+  # note - do not use this setup in production - it will not persist
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: username
+      POSTGRES_DB: favorites_api
+    ports:
+      - "5432:5432"
+      

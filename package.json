@@ -5,15 +5,22 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon src/index.js",
-    "test": "mocha"
+    "test": "NODE_ENV=test && mocha"
   },
   "dependencies": {
+    "config": "^3.3.1",
     "express": "^4.17.1",
-    "express-handlebars": "^4.0.5"
+    "express-handlebars": "^4.0.5",
+    "morgan": "^1.10.0",
+    "pg": "^8.2.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.3.0",
+    "sqlite3": "^5.0.0"
   },
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^8.0.1",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "sequelize-test-helpers": "^1.2.2"
   }
 }
