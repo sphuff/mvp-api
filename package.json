@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon src/index.js",
-    "test": "NODE_ENV=test && mocha"
+    "test": "cross-env NODE_ENV=test mocha"
   },
   "dependencies": {
     "config": "^3.3.1",
@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "cross-env": "^7.0.2",
     "mocha": "^8.0.1",
     "nodemon": "^2.0.4",
     "sequelize-test-helpers": "^1.2.2"
