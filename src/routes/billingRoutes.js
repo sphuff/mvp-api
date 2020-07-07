@@ -8,21 +8,7 @@ const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 router.post('/checkout', async (req, res) => {
     const { email } = req.body;
-    console.log(req.body);
-    const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        line_items: [{
-            price: 'price_1H2K3uEkwtXY5evztLunQLmi',
-            quantity: 1,
-        }],
-        customer_email: email,
-        mode: 'subscription',
-        success_url: 'http://localhost:3000/billing/success?session_id={CHECKOUT_SESSION_ID}',
-        cancel_url: 'https://localhost:3000/billing/cancel',
-    });
-
-    console.log('session: ', session);
-
+    const session = await BillingService.createCheckoutSession(email)
     res.send(session);
 });
 
