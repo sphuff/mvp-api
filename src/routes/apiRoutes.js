@@ -1,6 +1,6 @@
 const express = require ('express');
 const router = express.Router();
-const ApiKeyService = require('../apiKeys/apiKeyService');
+const ApiKeyService = require('../services/apiKeyService');
 const Database = require('../data');
 const { handleError } = require('../errors/httpUtils');
 

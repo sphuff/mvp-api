@@ -13,4 +13,16 @@ module.exports = class Database {
           privateKey,
         });
     }
+
+    static async getUserById(id) {
+        return db.User.findByPk(id);
+    }
+
+    static async createUser(email, stripeCustomerId, stripeSubscriptionId) {
+        return db.User.create({
+          email,
+          stripeCustomerId,
+          stripeSubscriptionId,
+        });
+    }
 }

@@ -2,10 +2,6 @@ const Database = require('../data');
 const { NotFound, BadRequest } = require('../errors');
 
 module.exports = class ApiKeyService {
-    static getInstance(database) {
-        this.database = database;
-    }
-
     static async getById(id) {
         const apiKey = await Database.getApiKeyById(id);
         if (!apiKey) throw new NotFound();

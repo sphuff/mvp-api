@@ -1,4 +1,4 @@
-const ApiKeyService = require('../src/apiKeys/apiKeyService');
+const ApiKeyService = require('../src/services/ApiKeyService');
 const { expect } = require('chai');
 
 let apiKeyId;
