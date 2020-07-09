@@ -1,5 +1,7 @@
 const UserService = require("./UserService");
 const { BadRequest } = require("../errors");
+const ApiKeyService = require("./ApiKeyService");
+const crypto = require('crypto');
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 
 module.exports = class BillingService {
@@ -28,6 +30,13 @@ module.exports = class BillingService {
 
     static async handleCheckoutSession(session) {
         const { customer_email: email, customer, subscription } = session;
-        await UserService.create(email, customer, subscription);
+        // create user
+        const user = await UserService.create(email, customer, subscription);
+        // then create API key
+        await ApiKeyService.create(this.generateRandomString(20), this.generateRandomString(20), user.id)
+    }
+
+    static _generateRandomString(length) {
+        return crypto.randomBytes(length).toString('hex');
     }
 }

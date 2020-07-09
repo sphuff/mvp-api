@@ -1,3 +1,0 @@
-{
-    "db": "postgres://username:password@localhost:5432/favorites_api"
-}

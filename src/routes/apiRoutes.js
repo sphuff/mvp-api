@@ -1,7 +1,6 @@
 const express = require ('express');
 const router = express.Router();
 const ApiKeyService = require('../services/apiKeyService');
-const Database = require('../data');
 const { handleError } = require('../errors/httpUtils');
 
 router.get('/', (req, res) => {
@@ -14,10 +13,9 @@ router.get('/', (req, res) => {
 });
 
 router.post('/api-keys', async (req, res) => {
-    const { publicKey, privateKey } = req.body;
-    console.log(req.body);
+    const { publicKey, privateKey, userId } = req.body;
     try {
-        const apiKey = await ApiKeyService.create(publicKey, privateKey);
+        const apiKey = await ApiKeyService.create(publicKey, privateKey, userId);
         res.send(apiKey);
     } catch(err) {
         handleError(err, res);

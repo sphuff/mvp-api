@@ -5,10 +5,11 @@ let apiKeyId;
 
 describe('ApiKeyService test', () => {
     describe('create tests', () => {
-        it('should return api key with passed in public and private key', async () => {
-            const apiKey = await ApiKeyService.create('public', 'private');
+        it('should return api key with valid parameters', async () => {
+            const apiKey = await ApiKeyService.create('public', 'private', 1);
             expect(apiKey.privateKey).to.equal('private');
             expect(apiKey.publicKey).to.equal('public');
+            expect(apiKey['UserId']).to.equal(1);
             apiKeyId = apiKey.id;
         });
         it('should return error if not passed in public and private key', async () => {
@@ -19,6 +20,15 @@ describe('ApiKeyService test', () => {
                 expect(err.message).to.equal('Must pass in public and private key');
             }
         });
+
+        it('should return error if invalid user', async () => {
+            try {
+                const apiKey = await ApiKeyService.create('public', 'private', 12345);
+                throw new Error('should have thrown');
+            } catch(err) {
+                expect(err.message).to.equal('Must pass valid user ID');
+            }
+        });
     });
 
     describe('getById tests', () => {
@@ -26,6 +36,7 @@ describe('ApiKeyService test', () => {
             const apiKey = await ApiKeyService.getById(apiKeyId);
             expect(apiKey.privateKey).to.equal('private');
             expect(apiKey.publicKey).to.equal('public');
+            expect(apiKey['UserId']).to.equal(1);
         });
     });
 });
