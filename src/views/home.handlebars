@@ -1,32 +1,7 @@
-<h1>Example App: Home</h1>
-<p>{{foo}}</p>
-
-    <input id='email-input' />
-    <button id="checkout-button">checkout</button>
-
-
-<script>
-    var stripe = Stripe('pk_test_B6EBhGz6u7wHFnOU6JFWx0y900bon1coYp');
-    var checkoutButton = document.getElementById('checkout-button');
-
-    checkoutButton.addEventListener('click', function() {
-        const email = document.getElementById('email-input').value;
-        fetch('http://localhost:3000/billing/checkout', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({email: email}),
-        }).then(function(response) {
-            response.json().then(function(session) {
-                stripe.redirectToCheckout({
-                    // Make the id field from the Checkout Session creation API response
-                    // available to this file, so you can provide it as argument here
-                    // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
-                    sessionId: session.id,
-                });
-            });
-        });
-        
-    });
-</script>
+<h1>Home</h1>
+<p>
+    Your public key: {{publicKey}}
+</p>
+<p>
+    Your private key: {{privateKey}}
+</p>

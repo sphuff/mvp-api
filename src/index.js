@@ -4,6 +4,8 @@ const exphbs  = require('express-handlebars');
 const path = require('path');
 const server = express();
 const routes = require('./routes');
+const multer = require('multer');
+const upload = multer();
 const cors = require('cors');
 const morgan = require('morgan');
 
@@ -15,6 +17,7 @@ server.set('view engine', 'handlebars');
 
 server.set('views', path.join(__dirname, 'views/'));
 
+server.use(upload.array());
 server.use(morgan('dev'));
 server.use((req, res, next) => {
     // use raw input for webhook

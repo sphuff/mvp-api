@@ -1,0 +1,16 @@
+<h1>Redirecting</h1>
+<p>{{sessionId}}</p>
+
+<script>
+    var stripe = Stripe('pk_test_B6EBhGz6u7wHFnOU6JFWx0y900bon1coYp');
+    const sessionId = "{{sessionId}}"
+    
+    window.onload = function() {
+        stripe.redirectToCheckout({
+            // Make the id field from the Checkout Session creation API response
+            // available to this file, so you can provide it as argument here
+            // instead of the {{CHECKOUT_SESSION_ID}} placeholder.
+            sessionId: sessionId,
+        });
+    }
+</script>

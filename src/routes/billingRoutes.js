@@ -7,9 +7,25 @@ const BillingService = require('../services/BillingService');
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 router.post('/checkout', async (req, res) => {
+  try {
     const { email } = req.body;
     const session = await BillingService.createCheckoutSession(email)
-    res.send(session);
+    res.redirect(`/billing/checkout?sessionId=${session.id}`)
+  } catch(err) {
+    handleError(err, res);
+  }
+});
+
+router.get('/checkout', async (req, res) => {
+  try {
+    const { sessionId } = req.query;
+    // render checkout view
+    res.render('home', {
+      sessionId: sessionId,
+    });
+  } catch(err) {
+    handleError(err, res);
+  }
 });
 
 router.post('/webhook', bodyParser.raw({type: 'application/json'}), async (request, response) => {
