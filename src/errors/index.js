@@ -19,7 +19,15 @@ class BadRequest extends HttpError {
     }
 }
 
+class UnauthorizedRequest extends HttpError {
+    status = 401;
+    constructor(message = 'Unauthorized Request') {
+        super(message);
+    }
+}
+
 module.exports = {
     NotFound: NotFound,
     BadRequest,
+    UnauthorizedRequest,
 }

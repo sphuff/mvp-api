@@ -1,35 +1,17 @@
 const express = require ('express');
 const router = express.Router();
-const ApiKeyService = require('../services/apiKeyService');
 const { handleError } = require('../errors/httpUtils');
+const ApiController = require('../controllers/ApiController');
 
-router.get('/', (req, res) => {
+router.use(async (req, res, next) => {
+    // here we check the bearer token to make sure they are a valid user
+    const { authorization: bearerToken } = req.headers;
     try {
-        const apiKey = ApiKeyService.getById(1);
-        res.send(apiKey);
-    } catch(err) {
-        res.status(400).send({error: err.message});
-    }
+        await ApiController.validateBearerToken(bearerToken);
+        next();
+    } catch(err) { handleError(err, res) }
 });
 
-router.post('/api-keys', async (req, res) => {
-    const { publicKey, privateKey, userId } = req.body;
-    try {
-        const apiKey = await ApiKeyService.create(publicKey, privateKey, userId);
-        res.send(apiKey);
-    } catch(err) {
-        handleError(err, res);
-    }
-});
-
-router.get('/api-keys/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-        const apiKey = await ApiKeyService.getById(id);
-        res.send(apiKey);
-    } catch(err) {
-        handleError(err, res);
-    }
-});
+// YOUR API ROUTES HERE
 
 module.exports = router;
