@@ -2,6 +2,7 @@ const UserService = require("./UserService");
 const { BadRequest } = require("../errors");
 const ApiKeyService = require("./ApiKeyService");
 const crypto = require('crypto');
+const EmailService = require("./EmailService");
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 
 module.exports = class BillingService {
@@ -34,6 +35,9 @@ module.exports = class BillingService {
         const user = await UserService.create(email, customer, subscription);
         // then create API key
         await ApiKeyService.create(this.generateRandomString(20), this.generateRandomString(20), user.id)
+        await EmailService.sendSignupEmail(email);
+
+        return user;
     }
 
     static _generateRandomString(length) {

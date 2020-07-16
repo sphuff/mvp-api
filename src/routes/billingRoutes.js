@@ -20,7 +20,7 @@ router.get('/checkout', async (req, res) => {
   try {
     const { sessionId } = req.query;
     // render checkout view
-    res.render('home', {
+    res.render('checkout', {
       sessionId: sessionId,
     });
   } catch(err) {
