@@ -13,9 +13,16 @@ module.exports = class UserService {
     }
 
     static async create(email, stripeCustomerId, stripeSubscriptionId) {
+        if (!email) {
+            throw new BadRequest('Must pass in email');
+        }
+        return await Database.createUser(email, stripeCustomerId, stripeSubscriptionId);
+    }
+
+    static async update(email, stripeCustomerId, stripeSubscriptionId) {
         if (!email || !stripeCustomerId || !stripeSubscriptionId) {
             throw new BadRequest('Must pass in email, stripeCustomerId, and stripeSubscriptionId');
         }
-        return await Database.createUser(email, stripeCustomerId, stripeSubscriptionId);
+        return await Database.updateUser(email, stripeCustomerId, stripeSubscriptionId);
     }
 }

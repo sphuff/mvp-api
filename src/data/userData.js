@@ -12,4 +12,11 @@ module.exports = {
           stripeSubscriptionId,
         });
     },
+
+    async updateUser(email, stripeCustomerId, stripeSubscriptionId) {
+        return await db.User.update({
+          stripeCustomerId,
+          stripeSubscriptionId,
+        },{ where: { email }});
+    },
 }

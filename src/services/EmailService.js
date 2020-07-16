@@ -1,8 +1,3 @@
-const UserService = require("./UserService");
-const { BadRequest } = require("../errors");
-const ApiKeyService = require("./ApiKeyService");
-const crypto = require('crypto');
-const stripe = require('stripe')(process.env.STRIPE_KEY);
 const sgMail = require('@sendgrid/mail');
 
 module.exports = class EmailService {
