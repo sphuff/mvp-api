@@ -6,6 +6,10 @@ module.exports = {
         return await db.ApiKey.findByPk(id);
     },
 
+    async getApiKeysForUserId(userId) {
+        return await db.ApiKey.findAll({ where: { 'UserId': userId }});
+    },
+
     async getApiKeyByKeys(publicKey, privateKey) {
         return await db.ApiKey.findOne({
             where: {

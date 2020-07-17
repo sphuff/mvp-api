@@ -14,6 +14,12 @@ module.exports = class ApiKeyService {
         return apiKey;
     }
 
+    static async getByUserId(userId) {
+        const apiKeys = await Database.getApiKeysForUserId(userId);
+        if (!apiKeys) throw new NotFound();
+        return apiKeys;
+    }
+
     static async create(publicKey, privateKey, userId) {
         if (!publicKey || !privateKey) {
             throw new BadRequest('Must pass in public and private key');

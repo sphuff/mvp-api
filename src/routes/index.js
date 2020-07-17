@@ -7,9 +7,9 @@ const HomeController = require('../controllers/HomeController');
 const { handleError } = require('../errors/httpUtils');
 
 router.get('/', async function (req, res) {
-    const { apiKeyId } = req.query;
+    const { userId } = req.query;
     try {
-        const apiKey = await HomeController.index(apiKeyId);
+        const apiKey = await HomeController.getApiKeyForUser(userId);
         res.render('home', {
             publicKey: apiKey.publicKey,
             privateKey: apiKey.privateKey,
