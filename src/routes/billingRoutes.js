@@ -4,7 +4,7 @@ const { handleError } = require('../errors/httpUtils');
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 const bodyParser = require('body-parser');
 const BillingService = require('../services/BillingService');
-const SignupService = require('../services/SignupService');
+const BillingController = require('../controllers/BillingController');
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 router.post('/checkout', async (req, res) => {
@@ -20,7 +20,7 @@ router.post('/checkout', async (req, res) => {
 router.get('/checkout', async (req, res) => {
   try {
     const { sessionId } = req.query;
-    // render checkout view
+    // render checkout view - just redirects to stripe checkout form
     res.render('checkout', {
       sessionId: sessionId,
     });
@@ -54,9 +54,9 @@ router.post('/webhook', bodyParser.raw({type: 'application/json'}), async (reque
   });
 
 router.get('/success', async (req, res) => {
-    const {email} = req.query;
-    const newUser = await SignupService.signUp(email);
-    res.send('success');
+    const { email } = req.query;
+    const loginTokenString = await BillingController.signUpUserAndGetLoginToken(email);
+    res.redirect(`/login?token=${loginTokenString}`);
 });
 
 router.get('/cancel', async (req, res) => {

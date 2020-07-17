@@ -20,7 +20,7 @@ module.exports = class BillingService {
             customer_email: email,
             mode: 'subscription',
             success_url: `http://localhost:3000/billing/success?session_id={CHECKOUT_SESSION_ID}&email=${email}`,
-            cancel_url: 'https://localhost:3000/billing/cancel',
+            cancel_url: 'http://localhost:3000/billing/cancel',
         });
     
         return session;

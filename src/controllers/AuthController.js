@@ -1,6 +1,7 @@
 const AuthService = require('../services/AuthService');
 const UserService = require('../services/UserService');
 const EmailService = require('../services/EmailService');
+const Database = require('../data');
 const { UnauthorizedRequest } = require('../errors');
 
 module.exports = class AuthController {
