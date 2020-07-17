@@ -8,10 +8,12 @@ const multer = require('multer');
 const upload = multer();
 const cors = require('cors');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 
 const port = process.env.PORT || 3000;
 
 server.use(cors())
+server.use(cookieParser());
 server.engine('handlebars', exphbs());
 server.set('view engine', 'handlebars');
 

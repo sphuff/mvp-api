@@ -19,6 +19,7 @@ router.get('/login', async (req, res) => {
             throw new BadRequest('Invalid token');
         }
         // do login magic here
+        res.cookie('login_token', token);
         res.redirect(`/`);
     } catch(err) { handleError(err, res) }
 });
