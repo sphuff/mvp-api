@@ -1,3 +1,4 @@
+const config = require('config');
 const express = require ('express');
 const router = express.Router();
 const path = require('path');
@@ -11,6 +12,7 @@ router.get('/', async function (req, res) {
     try {
         const apiKeys = await HomeController.getApiKeysFromRequest(req);
         res.render('home', {
+            docPath: `${config.get('BASE_URL')}/docs`,
             apiKeys: apiKeys.map(function(apiKey) {
                 return {
                     publicKey: apiKey.publicKey,

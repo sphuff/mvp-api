@@ -1,4 +1,7 @@
 ## Setup
+### Stripe
+Create a stripe account, and set up your keys in the `.env` file.
+
 ### Sequelize
 You'll need to run `npx sequelize-cli db:migrate` and `npx sequelize-cli db:migrate --env test` to create the ApiKeys table.
 

@@ -1,3 +1,4 @@
+const config = require('config');
 const UserService = require("./UserService");
 const { BadRequest } = require("../errors");
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
@@ -19,8 +20,8 @@ module.exports = class BillingService {
             }],
             customer_email: email,
             mode: 'subscription',
-            success_url: `http://localhost:3000/billing/success?session_id={CHECKOUT_SESSION_ID}&email=${email}`,
-            cancel_url: 'http://localhost:3000/billing/cancel',
+            success_url: `${config.get('BASE_URL')}/billing/success?session_id={CHECKOUT_SESSION_ID}&email=${email}`,
+            cancel_url: `${config.get('BASE_URL')}/billing/cancel`,
         });
     
         return session;
