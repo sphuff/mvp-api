@@ -1,7 +1,7 @@
 const express = require ('express');
 const router = express.Router();
 const { handleError } = require('../errors/httpUtils');
-const stripe = require('stripe')(process.env.STRIPE_KEY);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const bodyParser = require('body-parser');
 const BillingService = require('../services/BillingService');
 const BillingController = require('../controllers/BillingController');
@@ -23,6 +23,7 @@ router.get('/checkout', async (req, res) => {
     // render checkout view - just redirects to stripe checkout form
     res.render('checkout', {
       sessionId: sessionId,
+      stripeKey: process.env.STRIPE_PUBLIC_KEY,
     });
   } catch(err) {
     handleError(err, res);

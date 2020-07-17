@@ -2,7 +2,7 @@
 <p>{{sessionId}}</p>
 
 <script>
-    var stripe = Stripe('pk_test_B6EBhGz6u7wHFnOU6JFWx0y900bon1coYp');
+    var stripe = Stripe('{{stripeKey}}');
     const sessionId = "{{sessionId}}"
     
     window.onload = function() {
