@@ -1,5 +1,6 @@
 const express = require ('express');
 const router = express.Router();
+const path = require('path');
 const apiRoutes = require('./apiRoutes');
 const authRoutes = require('./authRoutes');
 const billingRoutes = require('./billingRoutes');
@@ -8,10 +9,14 @@ const { handleError } = require('../errors/httpUtils');
 
 router.get('/', async function (req, res) {
     try {
-        const apiKey = await HomeController.getApiKeyFromRequest(req);
+        const apiKeys = await HomeController.getApiKeysFromRequest(req);
         res.render('home', {
-            publicKey: apiKey.publicKey,
-            privateKey: apiKey.privateKey,
+            apiKeys: apiKeys.map(function(apiKey) {
+                return {
+                    publicKey: apiKey.publicKey,
+                    privateKey: apiKey.privateKey
+                }
+            }),
         });
     } catch(err) {
         handleError(err, res);

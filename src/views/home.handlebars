@@ -1,7 +1,9 @@
 <h1>Home</h1>
-<p>
-    Your public key: {{publicKey}}
-</p>
-<p>
-    Your private key: {{privateKey}}
-</p>
+{{#each apiKeys}}
+    <p>
+        Your public key: {{this.publicKey}}
+    </p>
+    <p>
+        Your private key: {{this.privateKey}}
+    </p>
+{{/each}}
