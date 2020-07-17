@@ -1,9 +1,22 @@
 <h1>Home</h1>
-{{#each apiKeys}}
-    <p>
-        Your public key: {{this.publicKey}}
-    </p>
-    <p>
-        Your private key: {{this.privateKey}}
-    </p>
-{{/each}}
+<div class="px-8">
+    {{#each apiKeys}}
+            <p class="text-gray-700 text-sm cursor-pointer" onclick="copyToClipboard('{{this.publicKey}}')">Public key:
+                <span class="primary-purple font-semibold break-words">{{this.publicKey}}</span>
+                <img class="inline-block mx-2" src="../assets/paste.svg"/>
+            </p>
+            <p class="text-gray-700 text-sm cursor-pointer" onclick="copyToClipboard('{{this.privateKey}}')">Private key:
+                <span class="primary-purple font-semibold break-words">{{this.privateKey}}</span>
+                <img class="inline-block mx-2" src="../assets/paste.svg"/>
+            </p>
+    {{/each}}
+</div>
+<div class="p-4 text-center">
+    <a href="http://localhost:3000/docs" class="px-4 py-2 rounded border border-purple-400 hover:border-purple-500 text-purple-500 hover:text-purple-600 font-medium sm:text-base text-xs">Check out the Docs</a>
+</div>
+
+<script>
+    function copyToClipboard(key) {
+        navigator.clipboard.writeText(key);
+    }
+</script>
