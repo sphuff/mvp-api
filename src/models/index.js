@@ -9,6 +9,7 @@ const config = require(__dirname + '/../../config/database.json')[env];
 const db = {};
 const User = require('./user');
 const ApiKey = require('./apiKey');
+const LoginToken = require('./loginToken');
 
 let sequelize;
 if (config.use_env_variable) {
@@ -19,8 +20,11 @@ if (config.use_env_variable) {
 
 db.User = User.initialize(sequelize);
 db.ApiKey = ApiKey.initialize(sequelize);
-db.User.hasMany(ApiKey);
-db.ApiKey.belongsTo(User);
+db.LoginToken = LoginToken.initialize(sequelize);
+db.User.hasMany(ApiKey, { foreignKey: 'UserId' });
+db.ApiKey.belongsTo(User, { foreignKey: 'UserId' });
+db.User.hasMany(LoginToken, { foreignKey: 'UserId' });
+db.LoginToken.belongsTo(User, { foreignKey: 'UserId' });
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

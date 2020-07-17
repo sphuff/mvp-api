@@ -7,7 +7,13 @@ module.exports = class UserService {
     }
 
     static async getById(id) {
-        const user = await Database.getApiKeyById(id);
+        const user = await Database.getUserById(id);
+        if (!user) throw new NotFound();
+        return user;
+    }
+
+    static async getByEmail(email) {
+        const user = await Database.getUserByEmail(email);
         if (!user) throw new NotFound();
         return user;
     }

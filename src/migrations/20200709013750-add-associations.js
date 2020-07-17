@@ -15,6 +15,13 @@ module.exports = {
         key: 'id',
       },
     });
+    await queryInterface.addColumn('LoginTokens', 'UserId', {
+      type: Sequelize.INTEGER,
+      references: {
+        model: 'Users',
+        key: 'id',
+      },
+    });
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -25,5 +32,6 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
     await queryInterface.removeColumn('ApiKeys', 'UserId');
+    await queryInterface.removeColumn('LoginTokens', 'UserId');
   }
 };

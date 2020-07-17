@@ -25,6 +25,12 @@ module.exports = {
      createdAt: new Date(),
      updatedAt: new Date(),
    }]);
+   await queryInterface.bulkInsert('LoginTokens', [{
+     token: 'abcdef',
+     'UserId': 1,
+     createdAt: new Date(),
+     updatedAt: new Date(),
+   }]);
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -34,6 +40,8 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+    await queryInterface.bulkDelete('LoginTokens', null, {});
+    await queryInterface.bulkDelete('ApiKeys', null, {});
     await queryInterface.bulkDelete('Users', null, {});
   }
 };
