@@ -24,6 +24,7 @@ router.get('/', async function (req, res) {
 });
 
 router.use('/', authRoutes);
+router.use('/docs', express.static(path.join(__dirname, '..', '/docs')))
 router.use('/api', apiRoutes);
 router.use('/billing', billingRoutes);
 
