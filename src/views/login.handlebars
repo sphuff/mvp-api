@@ -1,4 +1,18 @@
-<form method="POST" enctype="multipart/form-data">
-    <input name="email" type="email" placeholder="Your Email"/>
-    <button type="submit">Submit</button>
-</form>
+<div class="md:px-20 pt-8 w-full h-full min-h-screen flex justify-center items-center">
+    <form class="py-8 flex w-full max-w-768" method="post" action="http://localhost:3000/login" enctype="multipart/form-data">
+        <input class="flex-grow mr-2 border border-gray-300 pl-4 rounded" id="emailInput" name="email" placeholder="Your Email" type="email">
+        <button class="rounded text-white  primary-purple-bg py-4 text-sm font-light w-100" type="submit">Log In</button>
+    </form>
+</div>
+
+<style>
+    .max-w-768 {
+        max-width: 768px;
+    }
+    .w-100 {
+        width: 100px;
+    }
+    .primary-purple-bg {
+        background-color: #6C63FF;
+    }
+</style>
