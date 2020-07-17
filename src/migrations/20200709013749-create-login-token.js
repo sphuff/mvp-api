@@ -2,11 +2,6 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('LoginTokens', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        type: Sequelize.INTEGER
-      },
       token: {
         primaryKey: true,
         type: Sequelize.STRING

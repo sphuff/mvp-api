@@ -14,12 +14,9 @@ router.get('/login', async (req, res) => {
             res.render('login');
             return;
         }
-        const isValid = await AuthService.isValidLoginToken(token);
-        if (!isValid) {
-            // redirect to login in future
-            throw new BadRequest('Invalid token');
-        }
-        // do login magic here
+        await AuthController.validateLoginToken(token);
+        
+        // ten day cookie keeps them logged in
         res.cookie('login_token', token, { expires: new Date(Date.now() + TEN_DAYS_IN_MS) });
         res.redirect(`/`);
     } catch(err) { handleError(err, res) }
@@ -29,7 +26,6 @@ router.post('/login', async (req, res) => {
     const { email } = req.body;
     try {
         if (!email) {
-            // redirect to login in future
             throw new BadRequest('Invalid email');
         }
         await AuthController.createLoginRequest(email);

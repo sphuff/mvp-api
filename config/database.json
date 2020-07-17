@@ -10,7 +10,7 @@
   "test": {
     "username": "root",
     "password": "root",
-    "storage": "../database_test.sqlite')",
+    "storage": "../database_test.sqlite",
     "host": "127.0.0.1",
     "dialect": "sqlite"
   },

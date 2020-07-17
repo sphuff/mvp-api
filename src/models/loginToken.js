@@ -7,7 +7,10 @@ const {
 module.exports = class LoginToken extends Model {
     static initialize(sequelize) {
       LoginToken.init({
-        token: DataTypes.STRING
+        token: {
+          type: DataTypes.STRING,
+          primaryKey: true,
+        }
       }, {
         sequelize,
         modelName: 'LoginToken',

@@ -2,11 +2,6 @@ const Database = require('../data');
 const crypto = require('crypto');
 
 module.exports = class AuthService {
-    static async isValidLoginToken(token) {
-        const loginToken = await Database.getLoginToken(token);
-        return !!loginToken;
-    }
-
     static async getLoginToken(token) {
         return await Database.getLoginToken(token);
     }
