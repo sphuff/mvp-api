@@ -2,9 +2,10 @@ const express = require ('express');
 const router = express.Router();
 const { handleError } = require('../errors/httpUtils');
 const AuthService = require('../services/AuthService');
-const EmailService = require('../services/EmailService');
 const { BadRequest } = require('../errors');
-const UserService = require('../services/UserService');
+const AuthController = require('../controllers/AuthController');
+
+const TEN_DAYS_IN_MS = 864000000
 
 router.get('/login', async (req, res) => {
     const { token } = req.query;
@@ -19,7 +20,7 @@ router.get('/login', async (req, res) => {
             throw new BadRequest('Invalid token');
         }
         // do login magic here
-        res.cookie('login_token', token);
+        res.cookie('login_token', token, { expires: new Date(Date.now() + TEN_DAYS_IN_MS) });
         res.redirect(`/`);
     } catch(err) { handleError(err, res) }
 });
@@ -31,9 +32,7 @@ router.post('/login', async (req, res) => {
             // redirect to login in future
             throw new BadRequest('Invalid email');
         }
-        const user = await UserService.getByEmail(email);
-        const loginToken = await AuthService.createLoginToken(user);
-        await EmailService.sendLoginEmail(email, loginToken.token);
+        await AuthController.createLoginRequest(email);
         res.send('Check your email for a login link');
     } catch(err) { handleError(err, res) }
 });
