@@ -7,7 +7,10 @@ router.use(async (req, res, next) => {
     // here we check the bearer token to make sure they are a valid user
     const { authorization: bearerToken } = req.headers;
     try {
-        await ApiController.validateBearerToken(bearerToken);
+        await ApiController.validate(bearerToken);
+        // expose api user in request object
+        const apiUser = await ApiController.getApiUserFromBearerToken(bearerToken);
+        req.apiUser = apiUser;
         next();
     } catch(err) { handleError(err, res) }
 });

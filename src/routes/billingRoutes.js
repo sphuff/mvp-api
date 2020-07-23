@@ -10,7 +10,9 @@ const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 router.post('/checkout', async (req, res) => {
   try {
     const { email } = req.body;
-    const session = await BillingService.createCheckoutSession(email)
+    const session = await BillingService.createCheckoutSession(email);
+    // create user and inactive key, which will be activated after payment
+    await BillingController.createUserAndApiKey(email);
     res.redirect(`/billing/checkout?sessionId=${session.id}`)
   } catch(err) {
     handleError(err, res);
@@ -38,6 +40,7 @@ router.post('/webhook', bodyParser.raw({type: 'application/json'}), async (reque
     try {
       event = stripe.webhooks.constructEvent(request.body, sig, endpointSecret);
     } catch (err) {
+      console.warn(`Webhook Error: ${err.message}`);
       return response.status(400).send(`Webhook Error: ${err.message}`);
     }
   
@@ -45,8 +48,7 @@ router.post('/webhook', bodyParser.raw({type: 'application/json'}), async (reque
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
   
-      console.log(event);
-      // Fulfill the purchase...
+      // activate the user's API key and update billing info
       await BillingService.handleCheckoutSession(session);
     }
   
@@ -56,11 +58,12 @@ router.post('/webhook', bodyParser.raw({type: 'application/json'}), async (reque
 
 router.get('/success', async (req, res) => {
     const { email } = req.query;
-    const loginTokenString = await BillingController.signUpUserAndGetLoginToken(email);
+    const loginTokenString = await BillingController.getLoginTokenForUser(email);
     res.redirect(`/login?token=${loginTokenString}`);
 });
 
 router.get('/cancel', async (req, res) => {
+  // you probably want to redirect to your landing page here
     res.send('cancel');
 });
 

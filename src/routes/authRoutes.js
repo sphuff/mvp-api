@@ -2,7 +2,6 @@ const config = require('config');
 const express = require ('express');
 const router = express.Router();
 const { handleError } = require('../errors/httpUtils');
-const AuthService = require('../services/AuthService');
 const { BadRequest } = require('../errors');
 const AuthController = require('../controllers/AuthController');
 

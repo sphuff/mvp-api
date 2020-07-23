@@ -36,3 +36,7 @@ You'll need to configure which email provider you are using in `EmailService.js`
 ### Run Locally
 Run your DB container with `docker-compose up -d`.
 Next, set up the stripe webhook for local testing with `stripe listen --forward-to http://localhost:3000/billing/webhook`, then `yarn start:dev`.
+
+### Testing
+Q: "Why am I getting a validation error when I run migrations in the test environment"
+A: It's some sequelize weirdness. You can go ahead and delete `database_test.sqlite` and remigrate/reseed.

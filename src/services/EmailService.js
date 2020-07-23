@@ -1,39 +1,51 @@
-const sgMail = require('@sendgrid/mail');
+const nodemailer = require('nodemailer');
+const config = require('config');
 
 module.exports = class EmailService {
-    static getInstance(database) {
-        this.database = database;
+    static getInstance() {
+        let transport = nodemailer.createTransport({
+            service: "FastMail",
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
+            },
+        });
+        this.transport = transport;
     }
 
     static async sendSignupEmail(email) {
-        sgMail.setApiKey(process.env.SENDGRID_KEY);
+        // TODO: add in your own email info
         const msg = {
             to: email,
-            from: 'support@favoritesapi.com',
-            subject: 'Welcome to FavoritesAPI!',
-            html: `check out our documentation <a href="${process.env.BASE_URL}/documentation">here</a>`,
+            from: 'support@myapi.com',
+            subject: 'Welcome to MyAPI!',
+            html: `check out our documentation <a href="${config.get('BASE_URL')}/documentation">here</a>`,
         };
 
         try {
-            await sgMail.send(msg);
+            console.info(`Sending signup email to ${email}`);
+            await this.transport.sendMail(msg);
         } catch(err) {
+            console.info(`Signup email error ${err.message}`);
             throw err;
         }
     }
 
     static async sendLoginEmail(email, loginToken) {
-        sgMail.setApiKey(process.env.SENDGRID_KEY);
-        const loginLink = `${process.env.BASE_URL}/login?token=${loginToken}`;
+        const loginLink = `${config.get('BASE_URL')}/login?token=${loginToken}`;
+        // TODO: add in your own email info
         const msg = {
             to: email,
-            from: 'support@favoritesapi.com',
+            from: 'support@myapi.com',
             subject: 'Login Request',
             html: `Log in by clicking the following <a href="${loginLink}">link</a>`,
         };
 
         try {
-            await sgMail.send(msg);
+            console.info(`Sending login email to ${email}`);
+            await this.transport.sendMail(msg);
         } catch(err) {
+            console.info(`Login email error ${err.message}`);
             throw err;
         }
     }

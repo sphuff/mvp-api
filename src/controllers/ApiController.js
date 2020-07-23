@@ -4,7 +4,12 @@ const ApiKeyService = require('../services/ApiKeyService');
 const UserService = require('../services/UserService');
 
 module.exports = class ApiController {
-    static async validateBearerToken(bearerToken) {
+    static async validate(bearerToken) {
+        await this._validateBearerToken(bearerToken);
+        await this._validateApiKey(bearerToken)
+    }
+
+    static async _validateBearerToken(bearerToken) {
         if (!bearerToken) {
             throw new UnauthorizedRequest('Must pass valid bearer token in authorization header');
         }
@@ -12,9 +17,18 @@ module.exports = class ApiController {
         if (!(publicKey && privateKey)) {
             throw new UnauthorizedRequest('Must pass valid bearer token in authorization header');
         }
+    }
 
-        // make sure key exists
-        const apiKey = await ApiKeyService.getByKeys(publicKey, privateKey);
+    static async _validateApiKey(bearerToken) {
+        const apiKey = await this._getApiKeyForBearerToken(bearerToken);
+        if (!apiKey.isActive) {
+            throw new UnauthorizedRequest('You API key is inactive. Please contact support.');
+        }
+    }
+
+    static async _getApiKeyForBearerToken(bearerToken) {
+        const { publicKey, privateKey } = this._extractKeysFromBearerToken(bearerToken);
+        return await ApiKeyService.getByKeys(publicKey, privateKey);
     }
 
     static async getApiUserFromBearerToken(token) {

@@ -21,9 +21,9 @@ if (config.use_env_variable) {
 db.User = User.initialize(sequelize);
 db.ApiKey = ApiKey.initialize(sequelize);
 db.LoginToken = LoginToken.initialize(sequelize);
-db.User.hasMany(ApiKey, { foreignKey: 'UserId' });
+db.User.hasMany(ApiKey, { foreignKey: 'UserId', onDelete: 'CASCADE', hooks: true });
 db.ApiKey.belongsTo(User, { foreignKey: 'UserId' });
-db.User.hasMany(LoginToken, { foreignKey: 'UserId' });
+db.User.hasMany(LoginToken, { foreignKey: 'UserId', onDelete: 'CASCADE', hooks: true });
 db.LoginToken.belongsTo(User, { foreignKey: 'UserId' });
 
 db.sequelize = sequelize;

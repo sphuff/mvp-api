@@ -1,5 +1,4 @@
 const db = require('../models');
-const { Op } = require('sequelize');
 
 module.exports = {
     async getApiKeyById(id) {
@@ -25,4 +24,8 @@ module.exports = {
           privateKey,
         });
     },
+
+    async updateApiKey(apiKeyId, isActive) {
+        return await db.ApiKey.update({ isActive }, { where: { id: apiKeyId }});
+    }
 }

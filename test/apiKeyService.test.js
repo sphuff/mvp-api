@@ -9,6 +9,7 @@ describe('ApiKeyService test', () => {
             const apiKey = await ApiKeyService.create('public', 'private', 1);
             expect(apiKey.privateKey).to.equal('private');
             expect(apiKey.publicKey).to.equal('public');
+            expect(apiKey.isActive).to.equal(false);
             expect(apiKey['UserId']).to.equal(1);
             apiKeyId = apiKey.id;
         });

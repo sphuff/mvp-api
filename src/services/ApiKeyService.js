@@ -34,4 +34,11 @@ module.exports = class ApiKeyService {
         // get with updated foreign key
         return await Database.getApiKeyById(apiKey.id);
     }
+
+    static async update(apiKeyId, isActive) {
+        if (!apiKeyId) {
+            throw new BadRequest('Must pass in apiKeyId to update API key');
+        }
+        return await Database.updateApiKey(apiKeyId, isActive);
+    }
 }

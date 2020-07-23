@@ -9,6 +9,7 @@ const upload = multer();
 const cors = require('cors');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
+const EmailService = require('./services/EmailService');
 
 const port = process.env.PORT || 3000;
 
@@ -33,4 +34,7 @@ server.use('/', routes);
 
 server.listen(port, async () => {
     console.info(`Server started on ${port}`);
+    // set up services
+    await EmailService.getInstance();
+    console.info(`Set up services`);
 });
