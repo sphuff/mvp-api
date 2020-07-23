@@ -8,6 +8,9 @@ const billingRoutes = require('./billingRoutes');
 const HomeController = require('../controllers/HomeController');
 const { handleError } = require('../errors/httpUtils');
 
+// REMOVE ME
+router.get('/landing', (req, res) => res.render('landing'));
+
 router.get('/', async function (req, res) {
     try {
         const apiKeys = await HomeController.getApiKeysFromRequest(req);

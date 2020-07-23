@@ -3,3 +3,5 @@ node_modules
 .vscode
 .env
 yarn-error.log
+
+database_test.sqlite

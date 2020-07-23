@@ -3,21 +3,21 @@
   "development": {
     "username": "username",
     "password": "password",
-    "database": "favorites_api",
+    "database": "my_api_mvp",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
     "username": "root",
     "password": "root",
-    "storage": "../database_test.sqlite",
+    "storage": "database_test.sqlite",
     "host": "127.0.0.1",
     "dialect": "sqlite"
   },
   "production": {
     "username": "username",
     "password": "password",
-    "database": "favorites_api",
+    "database": "my_api_mvp",
     "host": "127.0.0.1",
     "dialect": "postgres"
   }
